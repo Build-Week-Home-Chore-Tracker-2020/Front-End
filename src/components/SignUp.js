@@ -7,6 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import {Link} from "react-router-dom"
 
 import { Formik, Form } from "formik";
 import * as yup from "yup";
@@ -68,8 +69,11 @@ const SignUp = props => {
           
 
           setStatus(res.data);
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("id", res.data.id)
+          this.props.history.push("/dashboard");
         // localStorage.setItem(res.data.token)  // Store Access Token
-          //this.props.history.push('/dashboard') // Redirect to Dashboard
+          this.props.history.push('/dashboard') // Redirect to Dashboard
           // setUsers(users => [...users, res.data]); 
           // console.log("this is users", users)
           resetForm();
@@ -179,6 +183,10 @@ const SignUp = props => {
               >
                 Sign Up
               </Button>
+              <Typography>
+                Already Have An Account <Link to="/">Click Here</Link>  
+              </Typography>
+
             </Form>
           )}
         </Formik>
