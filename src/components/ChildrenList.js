@@ -81,8 +81,7 @@ export const ChildrenList = props => {
 
   const [data, setData] = useState([]);
   const id = localStorage.getItem('id');
-  const [length, setLength]= useState("0");
-
+  
 
   useEffect(() => {
 
@@ -92,12 +91,13 @@ export const ChildrenList = props => {
     .get(`/api/parent/children/${id}`).then(response => {
       console.log('child list response: ', response);
       setData(response.data);
-      setLength(response.data.length);
-      console.log('childs data length',response.data.length)
+      console.log('childs data length',response.data.length);
+      console.log('childs data',response.data);
+      
       // console.log('new data: ', data);
 
     });
-  }, [length]);
+  }, []);
 
   return (
     <div className={classes.root}>
