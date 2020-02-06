@@ -85,7 +85,8 @@ const AddChild = props => {
   const [chores, setChores] = useState([]);
   const [child, setChild] = useState("");
   const [open, setOpen] = useState(false);
-  const id = localStorage.getItem('id')
+  const id = localStorage.getItem('id');
+  const childArrayLength = 0;
 
   const handleOpen = () => {
     setOpen(true);
@@ -106,7 +107,7 @@ const AddChild = props => {
       .post(`/api/auth/register/${id}`, childinfo)
         .then(res => {
           console.log("success", res);
-          console.log("this is response data", res.data)
+          console.log("this is response from add child", res)
           handleClose()
         })
         .catch(error => console.log(error.response, "Didn't work"));

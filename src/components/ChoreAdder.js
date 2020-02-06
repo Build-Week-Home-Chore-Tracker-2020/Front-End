@@ -17,6 +17,7 @@ import Select from '@material-ui/core/Select';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import {ChildrenList} from './ChildrenList';
 
 
 import { Formik, Form } from "formik";
@@ -74,6 +75,9 @@ const ChoreAdder = props => {
   const [chores, setChores] = useState([]);
   const [child, setChild] = useState("");
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState([]);
+  const id = localStorage.getItem('id');
+  // setChildData(ChildrenList.data);
 
   const handleOpen = () => {
     setOpen(true);
@@ -87,13 +91,34 @@ const ChoreAdder = props => {
     setChild(event.target.value);
   };
 
+
+  useEffect(() => {
+  axiosWithAuth()
+    .get(`/api/parent/children/${id}`).then(response => {
+      console.log('child list response: ', response);
+      setData(response.data);
+      // setChildName(response.data.name);
+      // setLength(response.data.length);
+      console.log('childs data length',response.data.length);
+      console.log('childs data',response.data);
+      // console.log('name of children', childName)
+
+      // console.log('new data: ', data);
+
+    });
+  }, []);
+
+
   const FormSubmit = ({values}) => {
     console.log("These are values", values);
+    // console.log("does data pass from childrens list", props.ChildrenList.data)
     axiosWithAuth()
       .post("https://choretracker01.herokuapp.com/api/chores/1", values)
         .then(res => {
+
           console.log("success", res);
           console.log("this is response data", res.data)
+          console.log("data imported from children list", ChildrenList.data)
         })
         .catch(error => console.log(error.response, "Didn't work"));
 
@@ -185,8 +210,20 @@ const ChoreAdder = props => {
                         <MenuItem value="">
                           <em>None</em>
                         </MenuItem>
-                        <MenuItem value={"Johnny"}>Johnny</MenuItem>
-                        <MenuItem value={"Peter"}>Peter</MenuItem>
+                        {
+                          !data ? (
+                            <MenuItem>No Children</MenuItem>  
+                          ):(
+                            data.map(data => (
+                              <MenuItem value={data.name}>{data.name}</MenuItem>
+                            
+                              
+                              ))
+                          )
+
+                        }
+                        
+                        <MenuItem value={"logan"}>Logan</MenuItem>
                         <MenuItem value={"Paul"}>Paul</MenuItem>
                       </Select>
                       <FormHelperText>Select Child</FormHelperText>

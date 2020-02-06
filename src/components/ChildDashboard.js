@@ -125,7 +125,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent:'space-evenly'
   },
   fixedHeight: {
-    height: 400,
+    height: 240,
   },
   fixedNavHeight: {
     height: 60,
@@ -200,14 +200,14 @@ const Dashboard = props => {
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
-        open={open} 
+        open={open}
       >
         <div className={classes.toolbarIcon}>
           LIST OF CHILDREN
         </div>
         <Divider />
-        <h4>{data.name}'s CHILDREN</h4>
-        {/* <Divider /> */}
+        LIST OF CHILDREN
+        <Divider />
         <ChildrenList />
       </Drawer>
       <main className={classes.content}>
