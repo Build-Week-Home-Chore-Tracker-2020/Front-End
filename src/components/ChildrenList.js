@@ -49,7 +49,9 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
+    marginBottom: theme.spacing(1),
   },
+
   ulflex: {
     display: 'flex',
     overflow: 'auto',
@@ -57,17 +59,21 @@ const useStyles = makeStyles(theme => ({
     justifyContent:'space-evenly',
     maxWidth: '100%',
     backgroundColor:'gray',
-    color: 'white'
+    color: 'white',
+    marginBottom: theme.spacing(1),
 
 
   },
   dataflex: {
     display: 'flex',
+    flexDirection: 'column',
     overflow: 'auto',
     justifyContent:'space-evenly',
     maxWidth: '100%',
     color: 'white',
-    border:'1px, solid, black'
+    marginBottom: theme.spacing(1),
+    
+    
 
 
   },
@@ -107,18 +113,19 @@ export const ChildrenList = props => {
       <main className={classes.content}>
         <Container maxWidth="lg" className={classes.container}>
 
-            <Grid item xs={12}>
-              <Paper className={classes.ulflex}>
+          <Grid  item xs={12}>
+            <Paper className={classes.ulflex}>
 
               {
                 !data ? (
                   <h2>No Children</h2>  
                 ):(
                   data.map(data => (
-                    <div className={classes.dataflex}>
-                    <h4 key={data.id}>{data.name}</h4>
-                    <h4 >{data.total_points}</h4>
-                    <h4 >{data.current_streaks}</h4>
+                    <div key={data.id}>
+                    <h4>{data.name}</h4>
+                    <h4 >Total Points: {data.total_points}</h4>
+                    <h4 >Streaks: {data.current_streaks}</h4>
+                    <Divider />
                     </div>
                   
                     
@@ -127,13 +134,9 @@ export const ChildrenList = props => {
 
               }
 
-
-          {/* {data.map(data => (
-            <Button key={data}>{data.name}</Button>
-          ))} */}
-        </Paper>
-            </Grid>
-      </Container>
+            </Paper>
+          </Grid>
+        </Container>
       </main>
     </div>
   );
