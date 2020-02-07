@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
   },
- 
+
   menuButton: {
     marginRight: 36,
   },
@@ -37,14 +37,14 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1,
   },
- 
+
 
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
 
   },
-  
+
   paper: {
     display: 'flex',
     overflow: 'auto',
@@ -72,8 +72,8 @@ const useStyles = makeStyles(theme => ({
     maxWidth: '100%',
     color: 'white',
     marginBottom: theme.spacing(1),
-    
-    
+
+
 
 
   },
@@ -82,24 +82,22 @@ const useStyles = makeStyles(theme => ({
 
 
 export const ChildrenList = props => {
-  const [choresList, setChoresList]= useState([]);
+  const [choresList, setChoresList]= useState(null);
   const classes = useStyles();
-
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const id = localStorage.getItem('id');
-  
-
-  useEffect(() => {
 
 
+  useEffect( () => {
 
     axiosWithAuth()
-    .get(`/api/parent/children/${id}`).then(response => {
-      console.log('child list response: ', response);
-      setData(response.data);
-      console.log('childs data length',response.data.length);
-      console.log('childs data',response.data);
-      
+    .get(`/api/parent/children/${id}`)
+    .then(response => {
+      // console.log('child list response: ', response);
+      // console.log('childs data length',response.data.length);
+      // console.log('childs data',response.data);
+      setData(response.data)
+
       // console.log('new data: ', data);
 
     });
@@ -118,17 +116,22 @@ export const ChildrenList = props => {
 
               {
                 !data ? (
-                  <h2>No Children</h2>  
+                  <h2>No Children</h2>
                 ):(
                   data.map(data => (
                     <div key={data.id}>
                     <h4>{data.name}</h4>
                     <h4 >Total Points: {data.total_points}</h4>
                     <h4 >Streaks: {data.current_streaks}</h4>
+                    <Button
+                    variant="contained"
+                    color="secondary">
+                    Remove Child
+                    </Button>
                     <Divider />
                     </div>
-                  
-                    
+
+
                     ))
                 )
 

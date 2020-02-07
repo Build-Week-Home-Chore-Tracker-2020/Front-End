@@ -71,14 +71,25 @@ export const ChoreList = props => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const deleteChore = (chore) =>{
+    console.log(chore.id);
+
+      axiosWithAuth()
+        .delete(`/api/chores/chore/${chore.id}`)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+  }
+
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const fixedNavHeightPaper = clsx(classes.navpaper, classes.fixedNavHeight);
 
   useEffect(() => {
     axiosWithAuth()
-    .get(`/api/chores/combined/${id}`)
+    .get(`/api/chores/${id}`)
     .then(res => {
-      console.log(`Chores list from API: ${res}`);
+      console.log('After effect: ', res)
+      setChoresList(res.data);
     })
     .catch(err => console.log(err))
 
@@ -96,7 +107,12 @@ export const ChoreList = props => {
                   <h2>No Chores Added</h2>
                 ):(
                   choresList.map(chore => (
-                    <ul key={chore}>{chore.name}</ul>
+                    <ul
+                    key={chore}
+                    choreid={chore.id}
+                    >
+                    {chore.name}
+                    <span onClick={() => deleteChore(chore)}>❌</span></ul>
                   ))
                 )
 
