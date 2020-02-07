@@ -216,15 +216,10 @@ const ChoreAdder = props => {
                           ):(
                             data.map(data => (
                               <MenuItem value={data.name}>{data.name}</MenuItem>
-                            
-                              
-                              ))
+                            ))
                           )
-
                         }
-                        
-                        <MenuItem value={"logan"}>Logan</MenuItem>
-                        <MenuItem value={"Paul"}>Paul</MenuItem>
+                      
                       </Select>
                       <FormHelperText>Select Child</FormHelperText>
                     </FormControl>

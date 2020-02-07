@@ -57,27 +57,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-// const choresArray = [
-//   "Harry Potter",
-//   "Luna Lovegood",
-//   "Neville Longbottom",
-//   "Hermione Granger",
-//   "Ron Weasley",
-//   "Ginny Weasley",
-//   "Fred Weasley",
-//   "George Weasley",
-//   "Albus Dumbledore ",
-//   "Aberforth Dumbledore ",
-//   "Dudley Dursley ",
-//   "Petunia Dursley ",
-//   "Vernon Dursley",
-//   "Cornelius Fudge",
-//   "Rubeus Hagrid ",
-//   "Viktor Krum ",
-//   "Bellatrix Lestrange",
-//   "Narcissa Malfoy",
-//   "Draco Malfoy"
-// ];
 
 export const ChoreList = props => {
   const [choresList, setChoresList]= useState([]);
@@ -118,7 +97,7 @@ export const ChoreList = props => {
                 ):(
                   choresList.map(chore => (
                     <ul key={chore}>{chore.name}</ul>
-                    ))
+                  ))
                 )
 
               }
