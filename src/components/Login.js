@@ -54,7 +54,7 @@ class Login extends React.Component {
           <button>Log in</button>
         </form>
         <Typography>
-          New User? <Link to="/login">Click Here</Link>
+          New User? <Link to="/register">Click Here</Link>
         </Typography>
       </div>
     );
