@@ -17,16 +17,15 @@ import Select from '@material-ui/core/Select';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import {ChildrenList} from './ChildrenList';
 
 
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 
 let SignupSchema = yup.object().shape({
-  name: yup.string().required("This field is required."),
-  description: yup.string().required("This field is required."),
-  child: yup.string().required("This field is required."),
+  name: yup.string(),
+  username: yup.string(),
+  email: yup.string().email('Invalid Email'),
 });
 
 const useStyles = makeStyles(theme => ({
@@ -70,17 +69,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
- const initialValues={
+
+const AddChild = props => {
+
+const initialValues = {
+  username: "",
   name: "",
-  description: ""
+  email: ""
 
 }
+;
 
-const ChoreAdder = props => {
+  // console.log('EditParent Props: ' , props );
   const classes = useStyles();
-  const [chores, setChores] = useState(initialValues);
   const [open, setOpen] = useState(false);
-  const id = localStorage.getItem('id');
+  const [newparent, setNewparent] = useState(initialValues)
+console.log(newparent);
+
 
   const handleOpen = () => {
     setOpen(true);
@@ -91,16 +96,15 @@ const ChoreAdder = props => {
   };
 
 
-
-  const FormSubmit = () => {
-    console.log("These are values", chores);
+  const FormSubmit = (e) => {
+    e.preventDefault()
+    console.log("Changing Parent Info", newparent);
     axiosWithAuth()
-      .post(`/api/chores/${id}`, chores)
+      .put(`/api/parent/${props.id}`, newparent)
         .then(res => {
-          // console.log("success", res);
-          // console.log("this is response data", res.data)
-          // console.log("data imported from children list", ChildrenList.data)
-          setOpen(false);
+          console.log("success", res);
+          console.log("this is response from add child", res)
+          handleClose()
         })
         .catch(error => console.log(error.response, "Didn't work"));
 
@@ -111,7 +115,7 @@ const ChoreAdder = props => {
       <CssBaseline />
       <div>
         <button type="button" onClick={handleOpen}>
-          ADD CHORE
+          User Settings
         </button>
         <Modal
           aria-labelledby="transition-modal-title"
@@ -128,12 +132,11 @@ const ChoreAdder = props => {
           <Fade in={open}>
             <div className={classes.paper}>
               <Typography component="h1" variant="h5">
-                Add Chore
+                Edit Information
               </Typography>
               <Formik
-
                 validationSchema={SignupSchema}
-                onSubmit={FormSubmit}
+                onSubmit={(e)=> FormSubmit()}
               >
               {({ errors, handleChange, touched, status }) => (
                 <Form className={classes.form}>
@@ -145,10 +148,11 @@ const ChoreAdder = props => {
                         name="name"
                         variant="outlined"
                         fullWidth
-                        onChange={(e) => setChores({...chores, name: e.target.value})}
-                        value={chores.name}
+                        onChange={(e) => setNewparent({...newparent, name: e.target.value})}
+                        value={newparent.name}
                         id="name"
-                        label="Name of Chore"
+                        label='name'
+                        defaultValue={props.name}
                         autoFocus
                         helperText={
                           errors.name && touched.name
@@ -158,26 +162,44 @@ const ChoreAdder = props => {
                       />
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField
-                        error={errors.description && touched.description}
-                        variant="outlined"
-                        fullWidth
-                        onChange={(e) => setChores({...chores, description: e.target.value})}
-                        value={chores.description}
-                        id="description"
-                        label="description"
-                        name="description"
-                        autoComplete="description"
-                        multiline
-                        rowsMax="4"
-                        helperText={
-                          errors.description && touched.description
-                            ? errors.description
-                            : null
-                        }
-                      />
-                    </Grid>
-
+                  <TextField
+                    error={errors.username && touched.username}
+                    variant="outlined"
+                    fullWidth
+                    onChange={(e) => setNewparent({...newparent, username: e.target.value})}
+                    value={newparent.username}
+                    id="username"
+                    label="username"
+                    name="username"
+                    autoComplete="uname"
+                    defaultValue={props.username}
+                    helperText={
+                      errors.username && touched.username
+                        ? errors.username
+                        : null
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    error={errors.password && touched.password}
+                    variant="outlined"
+                    fullWidth
+                    onChange={(e) => setNewparent({...newparent, email: e.target.value})}
+                    value={newparent.email}
+                    name="email"
+                    label="email"
+                    type="email"
+                    id="email"
+                    autoComplete="email"
+                    defaultValue={props.email}
+                    helperText={
+                      errors.password && touched.password
+                        ? errors.password
+                        : null
+                    }
+                  />
+                </Grid>
                   </Grid>
                   <Button
                     type="submit"
@@ -186,9 +208,11 @@ const ChoreAdder = props => {
                     color="primary"
                     className={classes.submit}
                     onClick={FormSubmit}
-                    onSubmit={handleClose}>
-                    Add Chore
+                    onSubmit={handleClose}
+                  >
+                    Save
                   </Button>
+
                 </Form>
               )}
               </Formik>
@@ -200,4 +224,4 @@ const ChoreAdder = props => {
   );
 };
 
-export default ChoreAdder;
+export default AddChild;

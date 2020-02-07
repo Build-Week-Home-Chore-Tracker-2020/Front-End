@@ -65,8 +65,8 @@ const SignUp = props => {
   const history = useHistory();
 
   const FormSubmit = (values, {setSubmitting, resetForm, setStatus, status}) => {
-    console.log(values);
-    
+    // console.log(values);
+
     axios
       .post("https://choretracker01.herokuapp.com/api/auth/register", values)
         .then(res => {
@@ -85,7 +85,7 @@ const SignUp = props => {
           history.push('/dashboard') // Redirect to Dashboard
 
       })
-      .catch(error => console.log(error.response, "Didn't work"));   
+      .catch(error => console.log(error.response, "Didn't work"));
   };
 
   return (
@@ -178,12 +178,12 @@ const SignUp = props => {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                
+
               >
                 Sign Up
               </Button>
               <Typography>
-                Already Have An Account <Link to="/">Click Here</Link>  
+                Already Have An Account <Link to="/">Click Here</Link>
               </Typography>
 
             </Form>
