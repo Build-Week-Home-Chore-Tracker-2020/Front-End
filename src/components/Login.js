@@ -1,5 +1,7 @@
 import React from "react";
 import axios from "axios";
+import {Link} from 'react-router-dom'
+import Typography from '@material-ui/core/Typography'
 
 class Login extends React.Component {
   state = {
@@ -51,6 +53,9 @@ class Login extends React.Component {
           />
           <button>Log in</button>
         </form>
+        <Typography>
+          New User? <Link to="/login">Click Here</Link>
+        </Typography>
       </div>
     );
   }
